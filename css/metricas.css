@@ -1,0 +1,28 @@
+.container-metricas {
+    max-width: 900px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.tarjeta-grafico {
+    background-color: #f9f9fc;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.titulo-grafico {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}

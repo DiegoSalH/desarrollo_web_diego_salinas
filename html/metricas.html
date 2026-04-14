@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Métricas</title>
+        <link rel="stylesheet" type="text/css" href="../css/actividad.css">
+        <link rel="stylesheet" type="text/css" href="../css/metricas.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script> 
+    </head>
+
+    <body>
+        <main class="container">
+            <section class="container-metricas">
+                <header class="logo">
+                    <h1 id="bajada">Panel de Métricas</h1>
+                    <nav>
+                        <a href="main.html" class="btn-volver">Volver al menú</a>
+                    </nav>
+                </header>
+
+                <div class="dashboard-grid">
+
+                    <section class="tarjeta-grafico">
+                        <h2 class="titulo-grafico">Crecimiento de Registros</h2>
+                        <canvas id="graficoLinea"></canvas> 
+                    </section>
+                    
+                    <section class="tarjeta-grafico">
+                        <h2 class="titulo-grafico">Tipos de Actividades</h2>
+                        <canvas id="graficoTorta"></canvas>
+                    </section>
+
+                </div>
+            </section>
+        </main>
+        <script src="../js/metricas.js"></script>
+    </body>
+</html>

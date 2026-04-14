@@ -1,0 +1,77 @@
+body {
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: sans-serif
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo img{
+    width: 190px;
+    margin-bottom: 15px;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.instruccion {
+    color: #666;
+    font-size: 1rem;
+}
+
+.menu-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.menu-card {
+    flex: 1;
+    min-width: 250px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;  /* quitamos la linea del enlace */
+    color: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.menu-card h2 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.menu-card p {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    line-height: 1.4;
+}
+
+.menu-card:hover {  /* efecto de que se levanta la tarjeta al pasar el mouse encima*/
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15);
+    border-color: #d32f2f; 
+}

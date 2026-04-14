@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registro</title>
+        <link rel="stylesheet" type="text/css" href="../css/login.css">
+    </head>
+    <body>
+        <main class="container">
+
+            <header class="logo">
+                <img id="logo-id" src="../logoDcc.svg" alt="Logo DCC">
+                <h1 id="bajada">Registrate para acceder al registro de actividades</h1>
+            </header>
+        
+            <form class="formulario" id="login-form" novalidate>
+                
+                <div id="full-name-input" class="grupo-input">
+                    <label for="full-name">Nombre completo</label>
+                    <input id="full-name" name="full-name" type="text"  placeholder="Nombre/s Apellido/s">
+                    <span class="error" id="error-full-name">Debe ingresar su nombre completo (mínimo un nombre y un apellido).</span>
+                </div>
+                
+                <div id="mail-input" class="grupo-input">
+                    <label for="email">Correo institucional</label>
+                    <input id="email" name="email" type="email">
+                    <span class="error" id="error-email">Debe ingresar un email valido.</span> 
+                </div>
+
+                
+                <div class="grupo-input">
+                    <label for="tipo-actividad">Tipo de Miembro:</label>
+                    <select id="tipo-actividad">
+                        <option value="">-- Seleccione su rol --</option>
+                        <option value="pregrado">Estudiante de Pregrado</option>
+                        <option value="postgrado">Estudiante de Postgrado</option>
+                        <option value="funcionario">Funcionario/a</option>
+                        <option value="academico">Academico/a</option>
+                    </select>
+                    <span class="error" id="error-tipo-miembro">Debe seleccionar un tipo de miembro.</span>
+                </div> 
+
+                <div id="phone-input" class="grupo-input">
+                    <label for="phone">Celular de contacto</label>
+                    <input id="phone" name="phone" type="tel" placeholder="912345678">
+                    <span class="error" id="error-phone">Ingrese un numero de contacto valido.</span>
+                </div>
+                            
+                <div id="username-input" class="grupo-input">
+                    <label for="username">Nombre de usuario</label>
+                    <input id="username" name="username" type="text">
+                    <span class="error" id="error-nombre">Debe ingresar un nombre de usuario (mínimo 3 caracteres y sin espacios).</span>     
+                </div>
+
+                <div id="contrasena-input" class="grupo-input">
+                    <label for="contrasena">Contraseña</label>
+                    <p class="ayuda-input">Mínimo 8 caracteres, incluye mayúscula, número y símbolo (.#*@$%&)</p>
+                    <input id="contrasena" name="contrasena" type="password">
+                    <span class="error" id="error-contrasena">Debe ingresar una contraseña valida.</span> 
+                </div>  
+
+                <footer class="botones">
+                    <button type="submit" id="envio">
+                        Registrarse
+                    </button>
+                </footer>
+            
+            </form>
+        </main>
+        <script src="../js/login.js"></script>
+    </body>
+</html>

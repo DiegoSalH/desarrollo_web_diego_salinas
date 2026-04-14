@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mis Actividades</title>
+        <link rel="stylesheet" type="text/css" href="../css/actividad.css">
+    </head>
+    <body>
+        <main class="container" style="max-width: 800px;">
+
+            <header class="logo">
+                <h1 id="bajada">Mis Actividades</h1>
+                <p class="instruccion">Registra tus actividades semanales (Maximo 5).</p>
+                <a href="main.html" class="btn-volver">Volver al menu</a>
+            </header>
+
+            <form class="formulario" id="actividades-form" novalidate>
+
+                <section id="contenedor-actividades">
+                    <section class="seccion-formulario bloque-actividad" data-id="1">
+                        <h2 class="titulo-actividad">Actividad 1</h2>
+
+                        <div class="grupo-input">
+                            <label>Nombre de la actividad</label>
+                            <input class="input-nombre" type="text">
+                        </div>
+                        
+                        <div class="grupo-input">
+                            <label>Tipo de Actividad:</label>
+                            <select class="input-tipo">
+                                <option value="">-- Seleccione tipo --</option>
+                                <option value="artistica">Artistica</option>
+                                <option value="deportiva">Deportiva</option>
+                                <option value="social">Social</option>
+                                <option value="tecnologica">Tecnologica</option>
+                                <option value="recreativa">Recreativa</option>
+                            </select>
+                        </div> 
+
+                        <div class="grupo-input">
+                            <label>Dia:</label>
+                            <select class="input-dia">
+                                <option value="">-- Seleccione día --</option>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miercoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sabado</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-input">
+                            <label>Hora inicio:</label>
+                            <input class="input-inicio" type="time">
+                        </div>
+
+                        <div class="grupo-input">
+                            <label>Hora fin:</label>
+                            <input class="input-fin" type="time">
+                        </div>
+
+
+                        <div class="grupo-input">
+                            <label>Enlace a Contenido (opcional)</label>
+                            <input class="input-url" type="url" placeholder="https://github.com/mi-proyecto">
+                        </div>
+
+                        <div class="grupo-input">
+                            <label>Evidencia (fotos o videos)</label>
+                            <input class="input-archivos" type="file" accept="image/*,video/*"  multiple required>
+                        </div>
+                    </section>   
+                </section>
+
+                <button type="button" id="boton-agregar-actividad" class="boton-agregar">
+                    + Añadir Actividad
+                </button>
+
+                <aside id="val-box" hidden style="padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 5px solid;">
+                    <h3 id="val-msg" style="margin-top: 0;"></h3>
+                    <ul id="val-list" style="margin-bottom: 0;"></ul>
+                </aside>
+
+                <footer class="botones">
+                    <button type="submit" id="envio">Registrar Actividades</button>
+                </footer>
+
+            </form>
+        </main>
+        <script src="../js/actividad.js"></script>
+    </body>
+</html>
