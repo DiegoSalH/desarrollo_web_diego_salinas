@@ -43,6 +43,13 @@ body {
   justify-content: center;
 }
 
+#logo-id {
+  width: 100px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+
+}
+
 #bajada {
   text-align: center;
   font-size: 1rem;
@@ -91,10 +98,7 @@ label {
   background-color: #3471bc;
 }
 
-#logo-id {
-  width: 250px;
-  margin: 0 auto;
-}
+
 
 section {
     margin: 0;
