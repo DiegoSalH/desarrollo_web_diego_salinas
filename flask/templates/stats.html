@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Estadísticas y Métricas{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <header>
+        <h1>Metricas del registro</h1>
+        <nav>
+            <a href="{{ url_for('index') }}" class="btn-volver">Volver al menu</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-grid">
+        <article class="tarjeta-grafico">
+            <h2 class="titulo-grafico">Distribucion por tipo de actividad</h2>
+            <canvas id="graficoTorta"></canvas>
+        </article>
+
+        <article class="tarjeta-grafico">
+            <h2 class="titulo-grafico">Registro en la ultima semana</h2>
+            <canvas id="graficoLinea"></canvas>
+        </article>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const labelsTorta = {{ labels_torta | tojson | safe }};
+    const valoresTorta = {{ valores_torta | tojson | safe }}; //tojson y safe son filtros de jinja :), es para que las listas de python funcionen bien en el js
+    const labelsLinea = {{ labels_linea | tojson | safe }};
+    const valoresLinea = {{ valores_linea | tojson | safe }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script> 
+<script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+{% endblock %}

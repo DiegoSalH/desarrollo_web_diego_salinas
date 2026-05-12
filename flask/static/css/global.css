@@ -1,0 +1,80 @@
+:root {
+    --primary-color: #d32f2f;      
+    --primary-hover: #b71c1c;
+    --secondary-color: #2c3e50;    
+    --accent-color: #4292f4;      
+    --bg-color: #f4f4f9;
+    --white: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-color: #e0e0e0;
+    --shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    --radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    line-height: 1.6;
+}
+
+.container {
+    width: 95%;
+    max-width: 1000px;
+    margin: 40px auto; 
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.full-height {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0; 
+}
+
+.btn-volver {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 2px solid var(--primary-color);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-volver:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+input, select, textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(66, 146, 244, 0.3);
+}
+
+h1, h2, h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}

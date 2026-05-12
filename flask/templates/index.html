@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Panel Principal{% endblock %}
+
+{% block body_class %}full-height{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <header class="logo">
+            <img id="logo-id" src="{{ url_for('static', filename='svg/logoMenu.svg') }}" alt="Logo Index">
+            <h1 id="bajada">Panel de Administracion</h1>
+            <p class="instruccion">Bienvenido, seleccione al modulo que desea acceder</p>
+        </header>
+
+        <nav class="menu-grid">
+
+            <a href="{{ url_for('registrar') }}" class="menu-card">
+                <h2>Registrar Actividad</h2>
+                <p>Añade una nueva actividad al sistema ingresando sus detalles formales.</p>
+            </a>
+
+            <a href="{{ url_for('ver_miembros') }}" class="menu-card">
+                <h2>Lista de miembros</h2>
+                <p>Visualiza y administra los usuarios que se han registrado.</p>
+            </a>
+
+            <a href="{{ url_for('stats') }}" class="menu-card">
+                <h2>Metricas y Graficos</h2>
+                <p>Consulta de estadisticas sobre miembros y actividades.</p>
+            </a>
+
+        </nav>
+        <section class="ultimos-miembros">
+            <h2 class="subtitulo-index">Ultimos Miembros Registrados</h2>
+            <div class="tabla-mini-contenedor">
+                <table class="tabla-mini">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in ultimos %}
+                        <tr onclick="window.location.href='{{ url_for('detalle_miembro', id_miembro=m.id) }}';" style="cursor:pointer;">
+                            <td>{{ m.nombre }}</td>
+                            <td>{{ m.email }}</td>
+                            <td>{{ m.fecha_registro.strftime('%d/%m/%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if "registro_exitoso" in messages %}
+            <div id="exito" class="exito-overlay">
+                <div class="exito-content">
+
+                    <div class="ticket-icon">
+                        <img src="{{ url_for('static', filename='svg/ticket.svg') }}" alt="Ticket" style="width: 80px;">
+                    </div>
+
+                    <h2>¡Registro Exitoso!</h2>
+                    <p>El miembro y las actividades fueron validadas y guardadas correctamente</p>
+                    <button onclick="cerrarModal()" class="btn-cerrar">Cerrar</button>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function cerrarModal() {
+            const e = document.getElementById('exito');
+            if (e) {
+                e.style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}

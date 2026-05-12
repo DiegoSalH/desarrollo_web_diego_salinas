@@ -1,0 +1,66 @@
+.logo {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#logo-id {
+    width: 90px;
+    margin: 0 auto;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bloque-actividad {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: #fcfcfd;
+    margin-bottom: 20px;
+}
+
+.titulo-actividad {
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+#envio {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#envio:hover {
+    background-color: #3471bc;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: var(--primary-color);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.btn-agregar {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}

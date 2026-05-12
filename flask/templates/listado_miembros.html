@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de miembros{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/lista.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <header>
+            <h1>Directorio de Miembros</h1>
+
+            <nav>
+                <a href="{{ url_for('index') }}" class="btn-volver">Volver al menu</a>
+            </nav>
+
+        </header>
+        <div class="tabla-contenedor">
+            <table class="tabla-miembros">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in lista %}
+                    <tr onclick="window.location.href='{{ url_for('detalle_miembro', id_miembro=m.id) }}';" style="cursor:pointer;">
+                        <td>{{ m.nombre }}</td>
+                        <td>{{ m.email }}</td>
+                        <td>{{ m.telefono }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <footer class="paginacion">
+            {% if actual > 1 %}
+            <a href="{{ url_for('ver_miembros', page=actual-1) }}" class="btn-pag">Anterior</a>
+            {% endif %}
+
+            <span>Página {{ actual }} de {{ total }}</span>
+
+            {% if actual < total %}
+            <a href="{{ url_for('ver_miembros', page=actual+1) }}" class="btn-pag">Siguiente</a>
+            {% endif %}
+        </footer>
+    </main>
+{% endblock %}
