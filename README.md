@@ -7,6 +7,7 @@ Esta aplicación es un sistema de gestión y registro de miembros. Permite reali
 - Se utilizó el motor de plantillas Jinja2 con un archivo base.html. Esto asegura que la navegación, los estilos globales y los scripts se carguen de manera consistente.
 - Se implementó SQLAlchemy como ORM para la gestión de la base de datos.
 - Para las métricas, se integró Chart.js (https://www.chartjs.org/) consumiendo datos dinamicos mediante Fetch api.
+- Se integró Chart.js por sobre opciones como Highcharts o Flotcharts debido a su buena responsividad y calidad visual. Del mismo modo, se priorizó esta herramienta para reutilizar la experiencia técnica desarrollada en las tareas previas, logrando una implementación más eficiente y consistente con el diseño existente.
 - Se diseñó una sección de comentarios en el detalle de cada actividad, la cual se encuentra en el detalle de cada miembro. El cliente JavaScript valida los datos en tiempo real y realiza peticiones asíncronas (GET y POST utilizando JSON) hacia Flask, permitiendo interactuar con el sistema sin recargar la página web.
 - Se utilizo un css global, para mantener consistencia en el diseño visual combinado con css especificos para mantener un diseño agradable.
 
