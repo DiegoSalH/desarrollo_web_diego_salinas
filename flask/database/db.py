@@ -1,13 +1,18 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, Text, desc, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 from datetime import datetime, timedelta
-
+"""
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002"
 DB_PASSWORD = "programacionweb"
 DB_HOST = "localhost"
 DB_PORT = 3306
-
+"""
+DB_NAME = "tarea2"
+DB_USERNAME = "root"
+DB_PASSWORD = "Dspass240."
+DB_HOST = "localhost"
+DB_PORT = 3306
 
 DB_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 engine = create_engine(DB_URL, echo=True, future=True)
@@ -57,6 +62,7 @@ class Actividad(Base):
 
     miembro = relationship("Miembro", back_populates="actividades")
     fotos = relationship("Foto", back_populates="actividad")
+    comentarios = relationship("Comentario", back_populates="actividad")
 
 class Foto(Base):
     __tablename__ = "foto"
@@ -67,7 +73,26 @@ class Foto(Base):
 
     actividad = relationship("Actividad", back_populates="fotos")
 
+class Comentario(Base):
+    __tablename__ = "comentario"
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, default=datetime.now, nullable=False)
+    actividad_id = Column(BigInteger, ForeignKey("actividad.id"), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentarios")
+
 #Funciones con las que recibimos cosas
+
+def get_actividad(actividad_id):
+    session = SessionLocal()
+    actividad = session.query(Actividad).options(joinedload(Actividad.fotos))\
+                           .filter(Actividad.id == actividad_id)\
+                           .first()
+    session.close()
+    return actividad
+
 def get_regiones():
     session = SessionLocal()
     regiones = session.query(Region).all()
@@ -84,18 +109,20 @@ def get_miembros_paginados(pagina_actual):
     session.close()
     return miembros, total_paginas
 
-def get_stats_actividades():
+def get_stats_actividades(): #grafico de torta, con actividad segun tipo
     session = SessionLocal()
     todas = session.query(Actividad).all()
     session.close()
  
-    conteo = {"arte": 0, "deporte": 0, "tecnología": 0, "social": 0, "recreación": 0, "otra": 0} #Conteo de forma bruta mientras encuentro otra forma
+    conteo = {"arte": 0, "deporte": 0, "tecnología": 0, "social": 0, "recreación": 0, "otra": 0} 
     for act in todas:
         if act.tipo in conteo:
             conteo[act.tipo] += 1 
-    return conteo
+    labels = list(conteo.keys())
+    valores = list(conteo.values())
+    return {"labels": labels, "valores": valores}
 
-def get_registros_semanales():
+def get_registros_semanales(): #esto es lo del grafico de lineas
     session = SessionLocal()
     hace_una_semana = datetime.now() - timedelta(days=7)
     resultados = session.query(
@@ -116,6 +143,18 @@ def get_registros_semanales():
         labels.append(fecha)
         valores.append(s[1])
     return {"labels": labels, "valores": valores}  #Diccionario de dias y cantidad
+
+def get_stats_actividades_por_comuna(): #esto es lo del grafico de barras
+    session = SessionLocal()
+    resultados = session.query(
+        Comuna.nombre.label("comuna"),
+        func.count(Actividad.id).label("total_actividades")
+    ).join(Miembro, Actividad.miembro_id == Miembro.id).join(Comuna, Miembro.comuna_id == Comuna.id)\
+    .group_by(Comuna.id, Comuna.nombre).order_by(func.count(Actividad.id).desc()).all()
+    session.close()
+    labels = [row.comuna for row in resultados]
+    valores = [row.total_actividades for row in resultados]
+    return {"labels": labels, "valores": valores}
 
 def get_miembro_completo(m_id):
     session = SessionLocal()
@@ -143,6 +182,20 @@ def get_ultimos_5_miembros():
     session.close()
     return miembros
 
+def get_comentarios_por_actividad(act_id):
+    session = SessionLocal()
+    comentarios = session.query(Comentario).filter(Comentario.actividad_id == act_id)\
+                    .order_by(Comentario.fecha.asc()).all()
+    comentarios_lista = []
+    for c in comentarios:
+        comentarios_lista.append({
+            "id": c.id,
+            "nombre": c.nombre,
+            "texto": c.texto,
+            "fecha": c.fecha.strftime("%d/%m/%Y %H:%M")
+        })
+    return comentarios_lista
+
 #Funciones con las que creamos cosas
 def create_miembro(nombre, email, telefono, comuna_id):
     session = SessionLocal()
@@ -168,3 +221,12 @@ def create_foto(ruta, nombre, actividad_id):
     session.add(nueva_foto)
     session.commit()
     session.close()
+
+def create_comentario(nombre, texto, actividad_id):
+    session = SessionLocal()
+    nuevo_comentario = Comentario(nombre = nombre, texto = texto, actividad_id=actividad_id, fecha=datetime.now())
+    session.add(nuevo_comentario)
+    session.commit()
+    id_comentario = nuevo_comentario.id
+    session.close()
+    return id_comentario

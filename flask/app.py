@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, session, flash
+from flask import Flask, request, render_template, redirect, url_for, session, flash, jsonify
 from database import db
 from markupsafe import escape
 from werkzeug.utils import secure_filename
@@ -93,10 +93,7 @@ def ver_miembros():
 
 @app.route("/stats", methods=["GET"])
 def stats():
-    datos_tipo = db.get_stats_actividades()
-    datos_registros = db.get_registros_semanales()
-    return render_template("stats.html", labels_torta = list(datos_tipo.keys()), valores_torta = list(datos_tipo.values())
-                           ,labels_linea = datos_registros["labels"], valores_linea = datos_registros["valores"])
+    return render_template("stats.html")
 
 @app.route("/miembro/<int:id_miembro>", methods = ["GET"]) #Esto es para cuando clickeamos a una persona de la lista para que nos despliegue toda la informacion
 def detalle_miembro(id_miembro):
@@ -105,5 +102,72 @@ def detalle_miembro(id_miembro):
         return "Miembro no encontrado"
     return render_template("detalle_miembro.html", m=miembro)
 
+@app.route("/actividad/<int:actividad_id>")
+def detalle_actividad(actividad_id):
+    actividad = db.get_actividad(actividad_id)
+    if not actividad:
+        return "Actividad no encontrada"
+    return render_template("detalle_actividad.html", actividad = actividad)
+
+@app.route("/api/stats-data")
+def stats_data():
+    try:
+        data_lineas = db.get_registros_semanales()
+        data_torta = db.get_stats_actividades()
+        data_barras = db.get_stats_actividades_por_comuna()
+
+        json = {
+            "miembros_por_dia": {
+                "labels": data_lineas["labels"],
+                "valores": data_lineas["valores"]
+            },
+            "actividades_por_tipo": {
+                "labels": data_torta["labels"],
+                "valores": data_torta["valores"]
+            },
+            "actividades_por_comuna": {
+                "labels": data_barras["labels"],
+                "valores": data_barras["valores"]
+            }
+        }
+        return jsonify(json), 200
+    except Exception as e:
+        print(f"Error en el servidor: {e}")
+        return jsonify({"error": "No se pudo calcular las estadisticas"}), 500
+
+@app.route("/api/comentarios/<int:actividad_id>", methods = ["GET"])
+def obtener_comentarios(actividad_id):
+    try:
+        comentarios = db.get_comentarios_por_actividad(actividad_id)
+        return jsonify(comentarios), 200
+    except Exception as e:
+        print(f"Error al obtener comentarios: {e}")
+        return jsonify({"error": "Nose pudieron cargar los datos"}), 500
+
+@app.route("/api/comentarios", methods=["POST"])
+def guardar_comentario():
+    try:
+        datos_recibidos = request.get_json()
+        nombre = datos_recibidos.get("nombre")
+        texto = datos_recibidos.get("texto")
+        actividad_id = datos_recibidos.get("actividad_id")
+
+        if not nombre or not texto or not actividad_id:
+            return jsonify({"error": "Todos los campos son obligatorios"}), 400
+        if len(nombre) > 80 or len(nombre) < 3 or len(texto) > 300 or len(texto) < 5:
+            return jsonify({"error": "Los datos exceden el limite de caracteres permitidos o en su defecto no alcanza el minimo"}), 400
+
+        id_nuevo = db.create_comentario(nombre, texto, actividad_id)
+        if id_nuevo:
+            return jsonify({
+                "status": "success",
+                "comentario_id": id_nuevo
+            }), 201
+        else:
+            return jsonify({"error": "No se pudo guardar el comentario en la base de datos"}), 500
+    except Exception as e:
+        print(f"Error en el servidor al procesar POST de comentarios: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+    
 if __name__ == "__main__":
     app.run(debug=True)
