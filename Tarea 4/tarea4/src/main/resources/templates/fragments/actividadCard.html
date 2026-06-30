@@ -1,0 +1,28 @@
+<div th:fragment="tarjeta-esqueleto" id="plantilla-actividad" style="display: none;">
+    <div class="actividad-card">
+        <div class="info-container">
+            <h3 [data-campo='nombre']></h3>
+            <p [data-campo='descripcion']></p>
+            <div class="meta-container">
+                <span class="badge-comuna" [data-campo='comuna']></span>
+                <span class="badge-evaluaciones" [data-id='total']></span>
+                <span class="badge-promedio" [data-id='promedio']></span>
+            </div>
+        </div>
+        
+        <div class="evaluar-container">
+            <select [data-id='select']>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7" selected>7</option>
+            </select>
+            <button class="btn-evaluar" [data-id='boton']>
+                Evaluar
+            </button>
+        </div>
+    </div>
+</div>

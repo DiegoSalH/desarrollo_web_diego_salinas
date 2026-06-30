@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Buscador de Actividades</title>
+        <div th:replace="~{fragments/header :: head-links}"></div>
+    </head>
+    <body>
+        <div class="container">
+            <h1> Buscador de Actividades </h1>
+
+            <div class="buscador-block">
+                <label for="buscador">
+                    Escribe al menos 3 caracteres para buscar (por nombre, descripcion o comuna):
+                </label>
+                <input type="text" id="buscador" oninput="evaluarTexto(this.value)" placeholder="Ej: Taller, Bucheve, Santiago...">
+            </div>
+
+            <div id="resultados">
+                <p class="placeholder-texto">Ingresa texto para comenzar la busqueda.</p>
+            </div>
+        </div>
+        <script th:src="@{/js/buscador.js}"></script>
+    </body>
+</html>
